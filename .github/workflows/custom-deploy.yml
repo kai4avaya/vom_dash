@@ -20,8 +20,14 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          rm -rf node_modules
+          npm ci
+          npm run build
 
+      - name: List dist contents
+        run: ls -R dist
+        
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
