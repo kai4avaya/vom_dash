@@ -8,7 +8,8 @@ import {initializeCounters} from './charts/counters.js';
 import { createEarthquakeGlobe } from './charts/earhquakeGlobe.js';
 import {typeWriter} from './charts/animatedText.js';
 import { createInteractiveScatterPlot } from './charts/animatedDots.js'
-import { createAnimatedPieChart } from './charts/pieCircle.js';
+// import { createAnimatedPieChart } from './charts/pieCircle.js';
+import { createCallCenterRadarChart } from './charts/radar.js';
 import { createForceNetworkGraph } from './charts/force-network.js';
 import { createSensorLineGraph,generateSensorData } from './charts/sensorGraph.js';
 import { createWorldMapLinks } from './charts/travelGlobe.js';
@@ -38,7 +39,12 @@ export function initializeCharts() {
   const addRedDots = createInteractiveScatterPlot(scatterPlotContainer, 10);
 
   const pieChartContainer = document.getElementById('pie-panel');
-  const updatePieChart = createAnimatedPieChart(pieChartContainer );
+  
+  createCallCenterRadarChart(pieChartContainer);
+
+  // Example of updating radar chart with new data after 10 seconds
+
+  
 
   const forceGraphContainer = document.getElementById('force-graph-panel');
   // const updateForceGraph = createForceNetworkGraph(forceGraphContainer);
@@ -107,4 +113,4 @@ export function updateCharts(newBarData, newLineData) {
 // window.addEventListener('load', initializeCharts);
 
 // Ensure the charts resize when the window is resized
-window.addEventListener('resize', initializeCharts);
+// window.addEventListener('resize', initializeCharts);
