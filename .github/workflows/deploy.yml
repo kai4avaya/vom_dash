@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # or master, depending on your default branch name
+    branches: [ main ]  # Ensure this matches your default branch name
 
 jobs:
   build-and-deploy:
@@ -14,20 +14,21 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # or your preferred Node.js version
+          node-version: '18'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        run: |
-          npm ci  # Install dependencies
-          npm run build  # Run your build script
+        run: npm run build
+
+      - name: Add .nojekyll file
+        run: touch dist/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist  # or your build output directory
+          folder: dist
           branch: gh-pages
           clean: true
           single-commit: true
