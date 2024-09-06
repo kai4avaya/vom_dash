@@ -27,3 +27,5 @@ jobs:
         with:
           folder: dist  # or your build output directory
           branch: gh-pages
+          clean: true
+          single-commit: true
