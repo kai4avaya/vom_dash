@@ -20,7 +20,9 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          npm ci  # Install dependencies
+          npm run build  # Run your build script
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
