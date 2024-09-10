@@ -92,6 +92,18 @@
     "scrollToElements": {
       "1": [
         {
+          "elementId": "ru-counter-container",
+          "message": "These counters show the current daily engagements across different regions and the number of waiting customers. All metrics are within normal ranges."
+        },
+        {
+          "elementId": "animated-line-graph-panel",
+          "message": "This animated line graph displays real-time data on customer interactions, showing stable patterns across all channels."
+        },
+        {
+          "elementId": "animated-area-graph-panel",
+          "message": "The animated area graph illustrates the distribution of workload across different departments, indicating balanced operations."
+        },
+        {
           "elementId": "bar-chart-panel",
           "message": "All systems are working well. This bar chart shows normal operational metrics across different departments."
         },
@@ -99,7 +111,6 @@
           "elementId": "line-graph-panel",
           "message": "The line graph demonstrates stable handle times across all agents over the past 24 hours."
         },
-     
         {
           "elementId": "piechart-panel",
           "message": "The pie chart shows a balanced distribution of call types, indicating normal operations and customer inquiry patterns."
@@ -115,6 +126,18 @@
       ],
       "2": [
         {
+          "elementId": "cn-counter-container",
+          "message": "Notice the slight increase in waiting customers and higher engagement numbers for NA and EU regions, indicating a potential issue."
+        },
+        {
+          "elementId": "animated-line-graph-panel",
+          "message": "The animated line graph is showing an upward trend in customer interaction times across all channels."
+        },
+        {
+          "elementId": "animated-area-graph-panel",
+          "message": "This animated area graph reveals an growing imbalance in workload distribution, with some departments experiencing higher volumes."
+        },
+        {
           "elementId": "bar-chart-panel",
           "message": "The bar chart shows an increase in average handle times across all active agents, with some departments more affected than others."
         },
@@ -126,13 +149,24 @@
           "elementId": "dot-panel",
           "message": "Each dot represents an agent, with larger dots indicating longer handle times. Notice the cluster of larger dots in certain departments."
         },
-
         {
           "elementId": "piechart-panel",
           "message": "This pie chart breaks down the types of calls contributing to longer handle times, helping focus coaching efforts."
         }
       ],
       "3": [
+        {
+          "elementId": "other-counter-container",
+          "message": "Observe the significant increase in waiting customers and higher engagement numbers across all regions, particularly in NA."
+        },
+        {
+          "elementId": "animated-line-graph-panel",
+          "message": "The animated line graph shows a sharp increase in voice interactions compared to other channels."
+        },
+        {
+          "elementId": "animated-area-graph-panel",
+          "message": "This animated area graph illustrates the growing disparity between voice and digital channel workloads."
+        },
         {
           "elementId": "bar-chart-panel",
           "message": "The bar chart indicates a spike in voice interaction volume over the past 30 minutes compared to the same time yesterday."
@@ -145,7 +179,6 @@
           "elementId": "pie-panel",
           "message": "The pie chart illustrates the current distribution of agents across voice and digital channels, highlighting the imbalance."
         },
-  
         {
           "elementId": "force-graph-panel",
           "message": "This force graph illustrates the current agent allocation and suggests optimal reallocation to handle the increased voice volume."
@@ -156,6 +189,18 @@
         }
       ],
       "4": [
+        {
+          "elementId": "us-counter-container",
+          "message": "The counters show a dramatic increase in waiting customers and engagement numbers across all regions, indicating a widespread service disruption."
+        },
+        {
+          "elementId": "animated-line-graph-panel",
+          "message": "This animated line graph visualizes the sudden spike in customer interaction times and hold durations across all channels."
+        },
+        {
+          "elementId": "animated-area-graph-panel",
+          "message": "The animated area graph shows a severe imbalance in workload distribution, with all departments experiencing high volumes."
+        },
         {
           "elementId": "earthquake-globe-panel",
           "message": "The globe visualization shows the widespread impact of the service disruption across all customers, with affected areas highlighted."
@@ -186,6 +231,18 @@
         }
       ],
       "5": [
+        {
+          "elementId": "other-counter-container",
+          "message": "The counters reveal an overwhelming number of waiting customers and extremely high engagement numbers in NA, reflecting the impact of the power outage."
+        },
+        {
+          "elementId": "animated-line-graph-panel",
+          "message": "This animated line graph shows the rapid escalation of customer interactions and emergency calls related to the power outage."
+        },
+        {
+          "elementId": "animated-area-graph-panel",
+          "message": "The animated area graph illustrates the shift in workload towards emergency response teams and power restoration efforts."
+        },
         {
           "elementId": "earthquake-globe-panel",
           "message": "The globe visualization highlights the states affected by the power outage due to weather conditions, with severity indicated by color."
@@ -219,5 +276,5 @@
           "message": "This force graph shows the relationships between affected power grids and critical infrastructure, aiding in prioritization of repairs."
         }
       ]
+    }
   }
-}
