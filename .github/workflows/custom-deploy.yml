@@ -25,8 +25,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: |
-          npm run build
+        run: npm run build
 
       - name: List dist contents
         run: ls -R dist
@@ -34,6 +33,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}  # Use your PAT here
           folder: dist  # This should deploy only the dist folder
           branch: gh-pages
           clean: true
