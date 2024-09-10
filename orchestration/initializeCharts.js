@@ -18,25 +18,30 @@ import { createWorldMapLinks } from "../charts/travelGlobe.js";
 import { createAnimatedPieChart } from "../charts/pieCircle.js";
 import {orchestrateScrolling, stopScrolling} from "./scroller" 
 import {configs} from '../configs/configs'
-
 let isScroll = localStorage.getItem('isScroll') !== 'false';
+console.log("Initial isScroll value:", isScroll);
 
 const scrollListener = document.getElementById('scroll-switch');
 
 // Set initial checkbox state
 scrollListener.checked = isScroll;
+console.log("Initial checkbox state:", scrollListener.checked);
 
 scrollListener.addEventListener('change', function() {
   isScroll = this.checked;
+  console.log("Checkbox changed. New isScroll value:", isScroll);
   localStorage.setItem('isScroll', isScroll);
+  console.log("Updated localStorage:", localStorage.getItem('isScroll'));
 
   if (isScroll) {
-    // If scrolling is enabled, reinitialize charts with current data
+    console.log("Scrolling enabled, reinitializing charts");
     initializeCharts(currentData); // Make sure currentData is defined and contains your current chart data
   } else {
+    console.log("Scrolling disabled, stopping scroll");
     stopScrolling();
   }
 });
+
   
   function scrollHelper(curatedData, interval = 5000) {
     if (!curatedData || !curatedData.scrollToElements || !Array.isArray(curatedData.scrollToElements)) {

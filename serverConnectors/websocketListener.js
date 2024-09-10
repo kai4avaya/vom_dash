@@ -28,7 +28,7 @@ function toggleNotificationClass(isAlert) {
 
 export function initializeWebSocket() {
   // Explicitly set the WebSocket URL to your backend server
-  const socketUrl = configs.devUrl+'/vom' //'wss://localhost:3000/vom';  // Update this to your actual backend URL
+  const socketUrl = configs.prodUrl+'/vom' //'wss://localhost:3000/vom';  // Update this to your actual backend URL
 
 
   socket = new WebSocket(socketUrl);
