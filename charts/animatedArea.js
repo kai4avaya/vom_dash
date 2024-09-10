@@ -1,6 +1,6 @@
 import * as Plot from "@observablehq/plot";
 
-export function createAnimatedAreaGraph(container, {chaosLevel = 1} = {}) {
+export function createAnimatedAreaGraph(container, chaosLevel = 1) {
   const numPoints = 10;
   let data = Array(numPoints).fill().map((_, i) => ({
     x: i + 1,
@@ -26,7 +26,7 @@ export function createAnimatedAreaGraph(container, {chaosLevel = 1} = {}) {
       height: 400,
       y: {
         domain: [0, 10],
-        label: "Wait-time (minutes)",
+        label: "Stress Level (sentiment analysis)",
         grid: true
       },
       x: {
@@ -38,17 +38,14 @@ export function createAnimatedAreaGraph(container, {chaosLevel = 1} = {}) {
         Plot.areaY(data, {
           x: "x",
           y: "y",
+          fill: "magenta",
+          fillOpacity: 1,
+          // stroke: "black",
           fill: "black",
-          fillOpacity: 0.3,
-          stroke: "black",
           strokeWidth: 2,
           curve: "natural"
         }),
-        Plot.dot(data, {
-          x: "x",
-          y: "y",
-          fill: "red"
-        })
+
       ]
     });
     

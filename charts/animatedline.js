@@ -1,6 +1,6 @@
 import * as Plot from "@observablehq/plot";
 
-export function createAnimatedLineGraph(container, {chaosLevel = 1} = {}) {
+export function createAnimatedLineGraph(container,chaosLevel=1) {
   const numPoints = 10;
   let data = Array(numPoints).fill().map(() => 5 + Math.random());
   let time = 0;
@@ -37,11 +37,7 @@ export function createAnimatedLineGraph(container, {chaosLevel = 1} = {}) {
           stroke: "black",
           strokeWidth: 2
         }),
-        Plot.dot(data.map((y, i) => ({x: i + 1, y})), {
-          x: "x",
-          y: "y",
-          fill: "black"
-        })
+
       ]
     });
     

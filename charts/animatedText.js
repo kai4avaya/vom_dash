@@ -1,4 +1,4 @@
-const messages = [
+const messagesSample = [
     "Amanda Rome requests support with her call.",
     "Center 321 is experiencing greater call volume than usual.",
     "Agent Jake Morrison has completed his training session.",
@@ -10,18 +10,18 @@ const messages = [
     "Agent Max Thompson is on a break.",
     "Weekly performance review meeting at 2 PM."
   ];
-  
+  let globMess;
   let messageIndex = 0;
   let charIndex = 0;
   let typingSpeed = 100; // Speed of typing
   let pauseBetweenMessages = 2000; // Pause between each full message
   
   const messageElement = document.getElementById("message-panel");
-  
- export  function typeWriter() {
+ export function typeWriter(messages = messagesSample, element = messageElement) {
+  globMess = messages;
     if (charIndex < messages[messageIndex].length) {
       // Display one character at a time
-      messageElement.innerHTML += messages[messageIndex].charAt(charIndex);
+      element.innerHTML += messages[messageIndex].charAt(charIndex);
       charIndex++;
       setTimeout(typeWriter, typingSpeed);
     } else {
@@ -34,19 +34,15 @@ const messages = [
     const deleteSpeed = 5; // Number of characters to delete at a time
     if (charIndex > 0) {
       // Remove a chunk of characters at a time (e.g., 5 characters)
-      messageElement.innerHTML = messages[messageIndex].substring(0, Math.max(0, charIndex - deleteSpeed));
+      messageElement.innerHTML = globMess[messageIndex].substring(0, Math.max(0, charIndex - deleteSpeed));
       charIndex -= deleteSpeed; // Reduce the character index by deleteSpeed
       setTimeout(deleteMessage, typingSpeed / 4); // Make the delete super fast
     } else {
       // Move to the next message
-      messageIndex = (messageIndex + 1) % messages.length;
+      messageIndex = (messageIndex + 1) % globMess.length;
       setTimeout(typeWriter, typingSpeed);
     }
   }
   
   
-  // Start typing on page load
-//   window.onload = function () {
-//     typeWriter();
-//   };
   

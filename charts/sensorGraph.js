@@ -3,14 +3,14 @@ import * as Plot from "@observablehq/plot";
 const chaosLevel = 1;  // You can change this value to increase/decrease fluctuation
 
 // Generate synthetic data for multiple sensors
-export function generateSensorData(numSensors = 10, hours = 50) {
+export function generateSensorData(numSensors = 3, hours = 50) {
   const data = [];
   for (let sensor = 0; sensor < numSensors; sensor++) {
     for (let hour = 0; hour <= hours; hour++) {
       data.push({
         hour: hour,
         value: Math.random() * 10,  // Random initial values
-        sensor: `Sensor ${sensor + 1}`
+        sensor: `Call Center ${sensor + 1}`
       });
     }
   }
@@ -26,7 +26,7 @@ function fluctuateData(data, chaos) {
 }
 
 // Function to create and update the line chart
-export function createSensorLineGraph(container, initialData = null, { width = 500, height = 300, chaos = chaosLevel } = {}) {
+export function createSensorLineGraph(container, initialData = null, chaos = chaosLevel, { width = 700, height = 300 } = {}) {
   let data = initialData && Array.isArray(initialData) ? [...initialData] : generateSensorData();
 
   function updateChart() {

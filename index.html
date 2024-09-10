@@ -137,6 +137,14 @@
       .counter {
         font-size: 2rem;
       }
+
+      .make-big {
+  transition: transform 1s ease; /* Animation duration, timing function */
+  transform: scale(1.1); /* Initial scale */
+  z-index: 1000;
+  border: 2px solid red;
+}
+
     }
   </style>
 </head>
@@ -194,6 +202,22 @@
 
 
         <div class="neo-nav">
+          <div class="neo-form-control" style="margin-top: 0.7em; margin-right: 0.80em">
+            <label
+              class="neo-switch"
+              for="switch"
+            >
+              <input
+                id="scroll-switch"
+                type="checkbox"
+                role="switch"
+               checked
+              >
+              <i class="neo-switch__icon">
+              </i>
+              Auto Scroll
+            </label>
+          </div>
           <div class="neo-badge__navbutton">
             <button class="neo-badge__navbutton--content neo-btn neo-icon-notifications-on" aria-label="notifications">
             </button>
@@ -296,7 +320,7 @@
                 08/22/2024, 11:39 AM
               </p>
             </div>
-            <div class="neo-notification__title neo-notification__text--truncated neo-notification__title--truncated">
+            <div id="notification-notice" class="neo-notification__title neo-notification__text--truncated neo-notification__title--truncated">
               Dashboard is connected to all systems
             </div>
             <div
@@ -346,10 +370,12 @@
 
 
         <div class="grid-container">
-          <div class="panel" id="bar-chart-panel">Bar Chart</div>
-          <div class="panel" id="line-graph-panel">Line Graph</div>
+          <div class="panel" id="bar-chart-panel"></div>
+          <div class="panel" id="line-graph-panel"></div>
           <div class="panel" id="earthquake-globe-panel"></div>
           <div class="panel" id="world-map-panel"></div>
+          <div class="panel" id="hexabin-panel"></div>
+          <div class="panel" id="piechart-panel"></div>
           <div class="panel" id="dot-panel"></div>
           <div class="panel" id="pie-panel"></div>
           <div class="panel" id="force-graph-panel"></div>
@@ -428,34 +454,8 @@
     document.getElementById('spinner').style.display = 'none';
   }
 
-  // Fetch emergency data on page load
-  window.onload = function () {
-    // retryFetchEmergencyData(5, 1000); // Retry up to 5 times, starting with a 1-second delay
-  };
 </script>
 
-<script type="module">
-  import { initializeCharts, updateCharts } from './main.js';
-
-  window.addEventListener('load', () => {
-    initializeCharts();
-
-    // Example of updating charts after 5 seconds with new data
-    setTimeout(() => {
-      const newBarData = [
-        { category: "A", value: 45 },
-        { category: "B", value: 20 },
-        { category: "C", value: 30 },
-        { category: "D", value: 55 },
-        { category: "E", value: 25 }
-      ];
-      const newLineData = Array.from({ length: 20 }, (_, i) => ({
-        date: new Date(2023, 1, i + 1),
-        value: Math.random() * 75 + 25
-      }));
-      updateCharts(newBarData, newLineData);
-    }, 5000);
-  });
-</script>
+<script type="module" src="main.js"></script>
 
 </html>

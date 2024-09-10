@@ -1,52 +1,3 @@
-// import * as Plot from "@observablehq/plot";
-// import * as topojson from "topojson-client";
-// import * as d3 from "d3";
-
-// let world, land, earthquakes;
-
-// async function loadData() {
-//   world = await fetch('../data/land.json').then(response => response.json());
-
-//   console.log("i am world", world);
-//   land = topojson.feature(world, world.objects.land);
-  
-//   const earthquakeData = await fetch('../data/quakes.geojson').then(response => response.json());
-
-//   console.log("i am earthquakeData", earthquakeData)
-//   earthquakes = earthquakeData.features.map(f => {
-//     const c = d3.geoCentroid(f);
-//     return {magnitude: f.properties.mag, longitude: c[0], latitude: c[1]};
-//   });
-// }
-
-// export async function createEarthquakeGlobe(container) {
-//   await loadData();
-
-//   let longitude = 0;
-
-//   function updateGlobe() {
-//     const chart = Plot.plot({
-//       projection: {type: "orthographic", rotate: [-longitude, -30]},
-//       r: {transform: (d) => Math.pow(10, d)}, // convert Richter to amplitude
-//       style: "overflow: visible;", // allow dots to escape
-//       marks: [
-//         Plot.geo(land, {fill: "currentColor", fillOpacity: 0.2}),
-//         Plot.sphere(),
-//         Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: "red", fill: "red", fillOpacity: 0.2})
-//       ]
-//     });
-
-//     container.innerHTML = '';
-//     container.appendChild(chart);
-
-//     longitude += 1;
-//     if (longitude > 360) longitude = 0;
-
-//     requestAnimationFrame(updateGlobe);
-//   }
-
-//   updateGlobe();
-// }
 
 import * as Plot from "@observablehq/plot";
 import * as topojson from "topojson-client";
@@ -472,21 +423,25 @@ function loadData() {
       return {magnitude: f.properties.mag, longitude: c[0], latitude: c[1]};
     });
 
-    console.log("World data loaded:", world);
-    console.log("Earthquake data loaded:", earthquakeData);
   } catch (error) {
     console.error("Error processing data:", error);
     throw error;
   }
 }
 
-export function createEarthquakeGlobe(container) {
+export function createEarthquakeGlobe(container, isOffline=true) {
+ 
   try {
     loadData();
 
     let longitude = 0;
 
-    function updateGlobe() {
+    function updateGlobe(isOffline) {
+      let color = "red"
+      if(isOffline){
+        color = "green"
+      }
+
       const chart = Plot.plot({
         projection: {type: "orthographic", rotate: [-longitude, -30]},
         r: {transform: (d) => Math.pow(10, d)}, // convert Richter to amplitude
@@ -494,7 +449,8 @@ export function createEarthquakeGlobe(container) {
         marks: [
           Plot.geo(land, {fill: "currentColor", fillOpacity: 0.2}),
           Plot.sphere(),
-          Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: "red", fill: "red", fillOpacity: 0.2})
+          Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: color, fill: color, fillOpacity: 0.2})
+          // !isOffline && Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: "red", fill: "red", fillOpacity: 0.2})
         ]
       });
 
