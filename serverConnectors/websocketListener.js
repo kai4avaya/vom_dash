@@ -28,7 +28,8 @@ function toggleNotificationClass(isAlert) {
 
 export function initializeWebSocket() {
   // Explicitly set the WebSocket URL to your backend server
-  const socketUrl = configs.prodUrl+'/vom' //'wss://localhost:3000/vom';  // Update this to your actual backend URL
+  // const socketUrl = configs.prodUrl+'/vom' //'wss://localhost:3000/vom';  // Update this to your actual backend URL
+  const socketUrl = configs.devUrl+'/vom' //'wss://localhost:3000/vom';  // Update this to your actual backend URL
 
 
   socket = new WebSocket(socketUrl);
@@ -51,9 +52,7 @@ export function initializeWebSocket() {
         currentState = newData;
         // Update your UI here
         updateGraphs(newData);
-      } else {
-        console.log('No changes in state');
-      }
+      } 
     } catch (error) {
       console.error('Error processing message:', error);
       toggleNotificationClass(true); // To toggle to alert class

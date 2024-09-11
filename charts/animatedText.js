@@ -1,4 +1,4 @@
-const messagesSample = [
+let messagesSample = [
     "Amanda Rome requests support with her call.",
     "Center 321 is experiencing greater call volume than usual.",
     "Agent Jake Morrison has completed his training session.",
@@ -19,6 +19,7 @@ const messagesSample = [
   const messageElement = document.getElementById("message-panel");
  export function typeWriter(messages = messagesSample, element = messageElement) {
   globMess = messages;
+  messagesSample = messages;
     if (charIndex < messages[messageIndex].length) {
       // Display one character at a time
       element.innerHTML += messages[messageIndex].charAt(charIndex);

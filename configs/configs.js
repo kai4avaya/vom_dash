@@ -6,7 +6,8 @@ export const configs = {
         '1': '5',
         '4': '3',
         '2': '4',
-        '3': '2'
+        '3': '2',
+        '5': '3',
       },
       scrollInterval: 5000
 }

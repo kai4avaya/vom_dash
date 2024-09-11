@@ -1,14 +1,11 @@
+const excludedElements = ['animated-line-graph-panel', 'animated-area-graph-panel'];
 let isScrolling = false;
 let scrollInterval;
 let currentIndex = 0;
 let previousElement = null;
 
-// Array of element IDs that should not receive the 'make-big' class
-const excludedElements = ['animated-line-graph-panel', 'animated-area-graph-panel'];
-
 export function orchestrateScrolling(elementIds, interval) {
   if (isScrolling) {
-    console.log("Stopping previous scroll");
     stopScrolling();
   }
 
@@ -16,25 +13,22 @@ export function orchestrateScrolling(elementIds, interval) {
   currentIndex = 0;
 
   function scrollToNextElement() {
-    console.log(`Scrolling to element ${currentIndex}`);
     if (!isScrolling) {
-      console.log("Scrolling stopped");
       return;
     }
 
     if (currentIndex >= elementIds.length) {
-      console.log("Resetting to beginning");
       currentIndex = 0;
     }
 
-    // Remove 'make-big' class from previous element
-    if (previousElement && !excludedElements.includes(previousElement.id)) {
+    // Remove 'make-big' class and red border from previous element
+    if (previousElement) {
       previousElement.classList.remove('make-big');
+      previousElement.style.border = '';
     }
 
     const currentElement = document.getElementById(elementIds[currentIndex]);
     if (!currentElement) {
-      console.error(`Element with id ${elementIds[currentIndex]} not found`);
       currentIndex = (currentIndex + 1) % elementIds.length;
       scrollInterval = setTimeout(scrollToNextElement, interval);
       return;
@@ -44,6 +38,12 @@ export function orchestrateScrolling(elementIds, interval) {
     if (!excludedElements.includes(currentElement.id)) {
       currentElement.classList.add('make-big');
     }
+
+    // Add red border to current element if it's in the excluded list
+    if (excludedElements.includes(currentElement.id)) {
+      currentElement.style.border = '2px solid red';
+    }
+
     previousElement = currentElement;
 
     // Scroll to the element
@@ -59,16 +59,15 @@ export function orchestrateScrolling(elementIds, interval) {
 }
 
 export function stopScrolling() {
-  console.log("Stopping scroll");
   isScrolling = false;
   clearTimeout(scrollInterval);
-  
-  // Remove 'make-big' class from the last element if it's not in the excluded list
-  if (previousElement && !excludedElements.includes(previousElement.id)) {
+
+  // Remove 'make-big' class and red border from the last element
+  if (previousElement) {
     previousElement.classList.remove('make-big');
+    previousElement.style.border = '';
   }
 }
-
 // Example usage:
 // const elementIds = ['element1', 'element2', 'animated-line-graph-panel', 'animated-area-graph-panel', 'element3'];
 // const interval = 5000; // 5 seconds

@@ -255,52 +255,37 @@ const quakeJson = {"type":"FeatureCollection","metadata":{"generated":1725569994
 {"type":"Feature","properties":{"mag":4.1,"place":"66 km N of Khandūd, Afghanistan","time":1724969103143,"updated":1724991539040,"tz":null,"url":"https://earthquake.usgs.gov/earthquakes/eventpage/us6000nnkc","detail":"https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/us6000nnkc.geojson","felt":null,"cdi":null,"mmi":null,"alert":null,"status":"reviewed","tsunami":0,"sig":259,"net":"us","code":"6000nnkc","ids":",us6000nnkc,","sources":",us,","types":",origin,phase-data,","nst":29,"dmin":1.97,"rms":0.65,"gap":81,"magType":"mb","type":"earthquake","title":"M 4.1 - 66 km N of Khandūd, Afghanistan"},"geometry":{"type":"Point","coordinates":[72.3109,37.5463,192.656]},"id":"us6000nnkc"},
 {"type":"Feature","properties":{"mag":4.3,"place":"south of Panama","time":1724965541091,"updated":1724979892040,"tz":null,"url":"https://earthquake.usgs.gov/earthquakes/eventpage/us6000nnk0","detail":"https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/us6000nnk0.geojson","felt":null,"cdi":null,"mmi":null,"alert":null,"status":"reviewed","tsunami":0,"sig":284,"net":"us","code":"6000nnk0","ids":",us6000nnk0,","sources":",us,","types":",origin,phase-data,","nst":24,"dmin":4.543,"rms":0.98,"gap":164,"magType":"mb","type":"earthquake","title":"M 4.3 - south of Panama"},"geometry":{"type":"Point","coordinates":[-82.9122,3.3414,10]},"id":"us6000nnk0"}],"bbox":[-179.8213,-57.9775,-0.11,179.5312,79.9272,604.422]}
 
-
-// async function loadData() {
+// function loadData() {
 //   try {
-//     const worldResponse = landJson // await fetch('../data/land.json');
-//     if (!worldResponse.ok) {
-//       throw new Error(`HTTP error! status: ${worldResponse.status}`);
-//     }
-//     const worldText = await worldResponse.text();
-//     console.log("World data response:", worldText.slice(0, 500) + "...");  // Log the first 500 characters
-//     try {
-//       world = JSON.parse(worldText);
-//     } catch (e) {
-//       console.error("Failed to parse world data:", worldText);
-//       throw new Error("Invalid JSON in world data");
-//     }
-
-//     console.log("World data loaded:", world);
+//     world = landJson;
 //     land = topojson.feature(world, world.objects.land);
     
-//     const earthquakeResponse = quakeJson // await fetch('../data/quakes.geojson');
-//     if (!earthquakeResponse.ok) {
-//       throw new Error(`HTTP error! status: ${earthquakeResponse.status}`);
-//     }
-//     const earthquakeText = await earthquakeResponse.text();
-//     console.log("Earthquake data response:", earthquakeText.slice(0, 500) + "...");  // Log the first 500 characters
-//     const earthquakeData = JSON.parse(earthquakeText);
-
-//     console.log("Earthquake data loaded:", earthquakeData);
+//     const earthquakeData = quakeJson;
 //     earthquakes = earthquakeData.features.map(f => {
 //       const c = d3.geoCentroid(f);
 //       return {magnitude: f.properties.mag, longitude: c[0], latitude: c[1]};
 //     });
+
 //   } catch (error) {
-//     console.error("Error loading data:", error);
+//     console.error("Error processing data:", error);
 //     throw error;
 //   }
 // }
 
-// // ... rest of the code remains the same ...
-// export async function createEarthquakeGlobe(container) {
+// export function createEarthquakeGlobe(container, isOffline=true) {
+ 
 //   try {
-//     await loadData();
+//     loadData();
 
 //     let longitude = 0;
 
 //     function updateGlobe() {
+//       console.log("I AM IS OFFLINE", isOffline)
+//       let color = "red"
+//       if(isOffline){
+//         color = "green"
+//       }
+
 //       const chart = Plot.plot({
 //         projection: {type: "orthographic", rotate: [-longitude, -30]},
 //         r: {transform: (d) => Math.pow(10, d)}, // convert Richter to amplitude
@@ -308,7 +293,8 @@ const quakeJson = {"type":"FeatureCollection","metadata":{"generated":1725569994
 //         marks: [
 //           Plot.geo(land, {fill: "currentColor", fillOpacity: 0.2}),
 //           Plot.sphere(),
-//           Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: "red", fill: "red", fillOpacity: 0.2})
+//           Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: color, fill: color, fillOpacity: 0.2})
+//           // !isOffline && Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: "red", fill: "red", fillOpacity: 0.2})
 //         ]
 //       });
 
@@ -324,93 +310,10 @@ const quakeJson = {"type":"FeatureCollection","metadata":{"generated":1725569994
 //     updateGlobe();
 //   } catch (error) {
 //     console.error("Failed to create earthquake globe:", error);
-//     container.innerHTML = `<p>Error loading earthquake data: ${error.message}</p>`;
+//     container.innerHTML = `<p>Error creating earthquake globe: ${error.message}</p>`;
 //   }
 // }
 
-
-
-
-// async function loadData() {
-//     try {
-//       const worldResponse = await fetch('../data/land.json');
-//       if (!worldResponse.ok) {
-//         throw new Error(`HTTP error! status: ${worldResponse.status}`);
-//       }
-//       console.log("worldResponse", worldResponse)
-//       const worldText = await worldResponse.text();
-//       console.log("World data response:", worldText.slice(0, 500) + "...");  // Log the first 500 characters
-//       try {
-//         world = JSON.parse(worldText);
-//         console.log("I am world", world)
-//       } catch (e) {
-//         console.error("Failed to parse world data:", worldText);
-//         throw new Error("Invalid JSON in world data");
-//       }
-  
-//       console.log("World data loaded:", world);
-//       land = topojson.feature(world, world.objects.land);
-
-//       console.log("i am land", land)
-      
-//       const earthquakeResponse =  await fetch('../data/quakes.geojson');
-
-//       console.log("earthquakeResponse", earthquakeResponse)
-//       if (!earthquakeResponse.ok) {
-//         throw new Error(`HTTP error! status: ${earthquakeResponse.status}`);
-//       }
-//       const earthquakeText = await earthquakeResponse.text();
-//       console.log("Earthquake data response:", earthquakeText.slice(0, 500) + "...");  // Log the first 500 characters
-//       const earthquakeData = JSON.parse(earthquakeText);
-  
-//       console.log("Earthquake data loaded:", earthquakeData);
-//       earthquakes = earthquakeData.features.map(f => {
-//         const c = d3.geoCentroid(f);
-//         return {magnitude: f.properties.mag, longitude: c[0], latitude: c[1]};
-//       });
-//     } catch (error) {
-//       console.error("Error loading data:", error);
-//       throw error;
-//     }
-//   }
-  
-//   // ... rest of the code remains the same ...
-//   export async function createEarthquakeGlobe(container) {
-//     try {
-//       await loadData();
-  
-//       let longitude = 0;
-  
-//       function updateGlobe() {
-//         const chart = Plot.plot({
-//           projection: {type: "orthographic", rotate: [-longitude, -30]},
-//           r: {transform: (d) => Math.pow(10, d)}, // convert Richter to amplitude
-//           style: "overflow: visible;", // allow dots to escape
-//           marks: [
-//             Plot.geo(land, {fill: "currentColor", fillOpacity: 0.2}),
-//             Plot.sphere(),
-//             Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: "red", fill: "red", fillOpacity: 0.2})
-//           ]
-//         });
-  
-//         container.innerHTML = '';
-//         container.appendChild(chart);
-  
-//         longitude += 1;
-//         if (longitude > 360) longitude = 0;
-  
-//         requestAnimationFrame(updateGlobe);
-//       }
-  
-//       updateGlobe();
-//     } catch (error) {
-//       console.error("Failed to create earthquake globe:", error);
-//       container.innerHTML = `<p>Error loading earthquake data: ${error.message}</p>`;
-//     }
-//   }
-
-
-// let world, land, earthquakes;
 
 function loadData() {
   try {
@@ -422,7 +325,6 @@ function loadData() {
       const c = d3.geoCentroid(f);
       return {magnitude: f.properties.mag, longitude: c[0], latitude: c[1]};
     });
-
   } catch (error) {
     console.error("Error processing data:", error);
     throw error;
@@ -430,18 +332,14 @@ function loadData() {
 }
 
 export function createEarthquakeGlobe(container, isOffline=true) {
- 
   try {
     loadData();
-
+    
     let longitude = 0;
-
-    function updateGlobe(isOffline) {
-      let color = "red"
-      if(isOffline){
-        color = "green"
-      }
-
+    
+    function updateGlobe() {
+      let color = isOffline ? "green" : "red";
+      
       const chart = Plot.plot({
         projection: {type: "orthographic", rotate: [-longitude, -30]},
         r: {transform: (d) => Math.pow(10, d)}, // convert Richter to amplitude
@@ -450,19 +348,49 @@ export function createEarthquakeGlobe(container, isOffline=true) {
           Plot.geo(land, {fill: "currentColor", fillOpacity: 0.2}),
           Plot.sphere(),
           Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: color, fill: color, fillOpacity: 0.2})
-          // !isOffline && Plot.dot(earthquakes, {x: "longitude", y: "latitude", r: "magnitude", stroke: "red", fill: "red", fillOpacity: 0.2})
-        ]
+        ],
+        // Add title to the chart
+        title: "Global Disruptions",
+        // Add legend
+        color: {
+          legend: true,
+          domain: ["Normal", "Anomaly"],
+          range: ["green", "red"]
+        }
       });
-
+      
       container.innerHTML = '';
       container.appendChild(chart);
-
+      
+    
+// Update the legend creation part
+const legend = document.createElement('div');
+legend.style.position = 'relative';
+legend.style.bottom = '20px';
+legend.style.right = '20px';
+legend.style.background = 'rgba(255, 255, 255, 0.8)';
+legend.style.padding = '10px';
+legend.style.borderRadius = '5px';
+legend.style.fontFamily = 'Arial, sans-serif';
+legend.innerHTML = `
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: flex; align-items: center;">
+      <span style="color: green; font-size: 20px; margin-right: 10px;">●</span>
+      <span>Normal</span>
+    </div>
+    <div style="display: flex; align-items: center;">
+      <span style="color: red; font-size: 20px; margin-right: 10px;">●</span>
+      <span>Anomaly</span>
+    </div>
+  </div>
+`;
+      
       longitude += 1;
       if (longitude > 360) longitude = 0;
-
+      
       requestAnimationFrame(updateGlobe);
     }
-
+    
     updateGlobe();
   } catch (error) {
     console.error("Failed to create earthquake globe:", error);

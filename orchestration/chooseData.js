@@ -7,14 +7,18 @@ function transformEmergencyType(type) {
 
 export function transformData(data) {
   const transformedType = transformEmergencyType(data.emergencyType);
+  console.log("data in transformData", transformedType)
   
   const result = {};
   
   for (const key in vomEmergency) {
-    if (vomEmergency[key][transformedType]) {
+    console.log("i am KEYYY", key)
+    if (transformedType in vomEmergency[key]) {
       result[key] = vomEmergency[key][transformedType];
     }
   }
+
+  console.log("transformedType", transformedType, result);
   
-return result
+  return result;
 }

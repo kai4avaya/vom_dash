@@ -16,67 +16,70 @@ import {
 import { createHexabin } from "../charts/hexabinUS.js";
 import { createWorldMapLinks } from "../charts/travelGlobe.js";
 import { createAnimatedPieChart } from "../charts/pieCircle.js";
-import {orchestrateScrolling, stopScrolling} from "./scroller" 
-import {configs} from '../configs/configs'
-let isScroll = localStorage.getItem('isScroll') !== 'false';
-console.log("Initial isScroll value:", isScroll);
+import {createHandleTimeGraph} from "../charts/linegraph_static.js"
+import { orchestrateScrolling, stopScrolling } from "./scroller";
+import { configs } from "../configs/configs";
+let isScroll = localStorage.getItem("isScroll") !== "false";
+let currentData;
 
-const scrollListener = document.getElementById('scroll-switch');
+const scrollListener = document.getElementById("scroll-switch");
 
 // Set initial checkbox state
 scrollListener.checked = isScroll;
-console.log("Initial checkbox state:", scrollListener.checked);
 
-scrollListener.addEventListener('change', function() {
+scrollListener.addEventListener("change", function () {
   isScroll = this.checked;
-  console.log("Checkbox changed. New isScroll value:", isScroll);
-  localStorage.setItem('isScroll', isScroll);
-  console.log("Updated localStorage:", localStorage.getItem('isScroll'));
+  localStorage.setItem("isScroll", isScroll);
 
-  if (isScroll) {
-    console.log("Scrolling enabled, reinitializing charts");
+  if (isScroll && currentData) {
     initializeCharts(currentData); // Make sure currentData is defined and contains your current chart data
   } else {
-    console.log("Scrolling disabled, stopping scroll");
     stopScrolling();
   }
 });
 
-  
-  function scrollHelper(curatedData, interval = 5000) {
-    if (!curatedData || !curatedData.scrollToElements || !Array.isArray(curatedData.scrollToElements)) {
-      console.error("Invalid data structure provided");
-      return;
-    }
-  
-    const elementIds = [];
-    const messages = [];
-  
-    curatedData.scrollToElements.forEach(item => {
-      if (item.elementId && item.message) {
-        elementIds.push(item.elementId);
-        messages.push(item.message);
-      }
-    });
-  
-    if (elementIds.length === 0 || messages.length === 0) {
-      console.error("No valid elements or messages found in the data");
-      return;
-    }
-  
-    orchestrateScrolling(elementIds, interval, messages);
+function scrollHelper(curatedData, interval = 5000) {
+  if (
+    !curatedData ||
+    !curatedData.scrollToElements ||
+    !Array.isArray(curatedData.scrollToElements)
+  ) {
+    console.error("Invalid data structure provided");
+    return;
   }
 
-export function initializeCharts(data = null) {
+  const elementIds = [];
+  const messages = [];
 
-    if (data && isScroll){
-        scrollHelper(data, configs.scrollInterval );
+  curatedData.scrollToElements.forEach((item) => {
+    if (item.elementId && item.message) {
+      elementIds.push(item.elementId);
+      messages.push(item.message);
     }
+  });
+
+  if (elementIds.length === 0 || messages.length === 0) {
+    console.error("No valid elements or messages found in the data");
+    return;
+  }
+
+  orchestrateScrolling(elementIds, interval, messages);
+}
+
+export function initializeCharts(data = null) {
+  currentData = data  // create global context
+  if (data && isScroll) {
+    scrollHelper(data, configs.scrollInterval);
+  }
   manualUpdate(data?.counters || 1);
+  console.log("animated text",  data?.antimatedText)
   typeWriter(data?.antimatedText);
   const earthquakeGlobeContainer = document.getElementById(
     "earthquake-globe-panel"
   );
+
+  console.log("i am data", data)
+
   createEarthquakeGlobe(earthquakeGlobeContainer, data?.earthquakeGlobe);
 
   const lineGraphContainer = document.getElementById(
@@ -101,6 +104,9 @@ export function initializeCharts(data = null) {
   const linePanel = document.querySelector("#line-graph-panel");
   linePanel.innerHTML = "";
   linePanel.appendChild(lineGraph);
+
+  const lineGraphStaticPanel = document.querySelector("#line-graph-static-panel");  
+  const lineGraphStatic = createHandleTimeGraph(lineGraphStaticPanel, data.lineGraphStatic || 1)
 
   const scatterPlotContainer = document.getElementById("dot-panel");
   const addRedDots = createInteractiveScatterPlot(
