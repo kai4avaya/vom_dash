@@ -1,39 +1,34 @@
 {
   "bar": {
     "1": [
-      { "category": "Chat", "value": 60, "avgValue": 120 },
-      { "category": "Messaging", "value": 40, "avgValue": 180 },
-      { "category": "Voice", "value": 20, "avgValue": 250 },
-      { "category": "Video", "value": 69, "avgValue": 80 },
-      { "category": "Email", "value": 200, "avgValue": 220 }
+      { "category": "Americas", "value": 21 },
+      { "category": "APAC", "value": 19 },
+      { "category": "EMEA", "value": 16 },
+      { "category": "Gitex", "value": 6 }
     ],
     "2": [
-      { "category": "Chat", "value": 125, "avgValue": 120 },
-      { "category": "Messaging", "value": 190, "avgValue": 180 },
-      { "category": "Voice", "value": 270, "avgValue": 250 },
-      { "category": "Video", "value": 70, "avgValue": 80 },
-      { "category": "Email", "value": 230, "avgValue": 220 }
+      { "category": "Americas", "value": 20 },
+      { "category": "APAC", "value": 18 },
+      { "category": "EMEA", "value": 15 },
+      { "category": "Gitex", "value": 5 }
     ],
     "3": [
-      { "category": "Chat", "value": 201, "avgValue": 120 },
-      { "category": "Messaging", "value": 200, "avgValue": 180 },
-      { "category": "Voice", "value": 300, "avgValue": 250 },
-      { "category": "Video", "value": 60, "avgValue": 80 },
-      { "category": "Email", "value": 250, "avgValue": 220 }
+      { "category": "Americas", "value": 22 },
+      { "category": "APAC", "value": 17 },
+      { "category": "EMEA", "value": 14 },
+      { "category": "Gitex", "value": 4 }
     ],
     "4": [
-      { "category": "Chat", "value": 203, "avgValue": 120 },
-      { "category": "Messaging", "value": 210, "avgValue": 180 },
-      { "category": "Voice", "value": 320, "avgValue": 250 },
-      { "category": "Video", "value": 202, "avgValue": 80 },
-      { "category": "Email", "value": 288, "avgValue": 220 }
+      { "category": "Americas", "value": 19 },
+      { "category": "APAC", "value": 20 },
+      { "category": "EMEA", "value": 16 },
+      { "category": "Gitex", "value": 5 }
     ],
     "5": [
-      { "category": "Chat", "value": 207, "avgValue": 120 },
-      { "category": "Messaging", "value": 321, "avgValue": 180 },
-      { "category": "Voice", "value": 350, "avgValue": 250 },
-      { "category": "Video", "value": 99, "avgValue": 80 },
-      { "category": "Email", "value": 304, "avgValue": 220 }
+      { "category": "Americas", "value": 15 },
+      { "category": "APAC", "value": 13 },
+      { "category": "EMEA", "value": 10 },
+      { "category": "Gitex", "value": 20 }
     ]
   },
   "animatedDots": { "1": 1, "2": 2, "3": 3, "4": 4, "5": 5 },
@@ -90,6 +85,7 @@
   "radar": { "1": 1, "2": 2, "3": 3, "4": 4, "5": 5 },
   "sensorGraph": { "1": 1, "2": 2, "3": 3, "4": 4, "5": 5 },
   "animatedArea": { "1": 1, "2": 2, "3": 3, "4": 4, "5": 5 },
+  "travelGlobe":  { "1": 1, "2": 2, "3": 3, "4": 4, "5": 5 },
   "scrollToElements": {
     "1": [
       {
@@ -207,6 +203,10 @@
         "message": "The globe visualization shows the widespread impact of the service disruption across all customers, with affected areas highlighted."
       },
       {
+        "elementId": "bar-chart-panel",
+        "message": "All systems are working well. This bar chart shows normal operational metrics across different departments."
+      },
+      {
         "elementId": "hexabin-panel",
         "message": "This hexbin chart represents the density of affected customers in different regions, with darker colors indicating higher impact."
       },
@@ -239,6 +239,10 @@
       {
         "elementId": "animated-line-graph-panel",
         "message": "This animated line graph shows the rapid escalation of customer interactions and emergency calls related to the power outage."
+      },
+      {
+        "elementId": "bar-chart-panel",
+        "message": "All systems are working well. This bar chart shows normal operational metrics across different departments."
       },
       {
         "elementId": "animated-area-graph-panel",

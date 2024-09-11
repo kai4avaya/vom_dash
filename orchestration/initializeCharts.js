@@ -17,6 +17,7 @@ import { createHexabin } from "../charts/hexabinUS.js";
 import { createWorldMapLinks } from "../charts/travelGlobe.js";
 import { createAnimatedPieChart } from "../charts/pieCircle.js";
 import {createHandleTimeGraph} from "../charts/linegraph_static.js"
+import {createCallDensityHeatmap} from "../charts/heatmap"
 import { orchestrateScrolling, stopScrolling } from "./scroller";
 import { configs } from "../configs/configs";
 let isScroll = localStorage.getItem("isScroll") !== "false";
@@ -72,13 +73,10 @@ export function initializeCharts(data = null) {
     scrollHelper(data, configs.scrollInterval);
   }
   manualUpdate(data?.counters || 1);
-  console.log("animated text",  data?.antimatedText)
   typeWriter(data?.antimatedText);
   const earthquakeGlobeContainer = document.getElementById(
     "earthquake-globe-panel"
   );
-
-  console.log("i am data", data)
 
   createEarthquakeGlobe(earthquakeGlobeContainer, data?.earthquakeGlobe);
 
@@ -105,8 +103,11 @@ export function initializeCharts(data = null) {
   linePanel.innerHTML = "";
   linePanel.appendChild(lineGraph);
 
+  const heatPanel = document.querySelector("#heatmap-panel");
+  createCallDensityHeatmap(heatPanel)
+
   const lineGraphStaticPanel = document.querySelector("#line-graph-static-panel");  
-  const lineGraphStatic = createHandleTimeGraph(lineGraphStaticPanel, data.lineGraphStatic || 1)
+  const lineGraphStatic = createHandleTimeGraph(lineGraphStaticPanel, data?.lineGraphStatic || 1)
 
   const scatterPlotContainer = document.getElementById("dot-panel");
   const addRedDots = createInteractiveScatterPlot(
@@ -136,7 +137,7 @@ export function initializeCharts(data = null) {
   );
 
   const worldMapContainer = document.getElementById("world-map-panel");
-  const worldMapChart = createWorldMapLinks(worldMapContainer);
+  const worldMapChart = createWorldMapLinks(worldMapContainer, data?.travelGlobe || 1);
 
   const hexabinContainer = document.getElementById("hexabin-panel");
   hexabinContainer.innerHTML = "";
@@ -146,33 +147,6 @@ export function initializeCharts(data = null) {
   createForceNetworkGraph(forceGraphContainer);
 
   // Example of updating world map links after 10 seconds
-  setTimeout(() => {
-    const newConnections = [
-      {
-        name: "Berlin to Buenos Aires",
-        x1: 13.405,
-        y1: 52.52,
-        x2: -58.3816,
-        y2: -34.6037,
-      },
-      {
-        name: "Cape Town to Bangkok",
-        x1: 18.4241,
-        y1: -33.9249,
-        x2: 100.5018,
-        y2: 13.7563,
-      },
-      {
-        name: "Mexico City to Mumbai",
-        x1: -99.1332,
-        y1: 19.4326,
-        x2: 72.8777,
-        y2: 19.076,
-      },
-    ];
-    createWorldMapLinks(worldMapContainer, newConnections);
-  }, 10000);
-
   // Example of updating sensor data after 10 seconds
   setTimeout(() => {
     const newSensorData = generateSensorData(3, 30); // Generate new data with 5 sensors for 30 hours

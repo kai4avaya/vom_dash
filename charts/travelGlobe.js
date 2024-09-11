@@ -53,11 +53,6 @@ const world = {"type":"Topology","objects":{"countries":{"type":"GeometryCollect
 // }
 
 
-import * as Plot from "@observablehq/plot";
-import * as topojson from "topojson-client";
-
-export function createWorldMapLinks(container, chaosLevel, { width = 960, height = 500 } = {}) {
-  const land = topojson.feature(world, world.objects.land);
 
   // Define datasets for each chaos level
   const datasets = {
@@ -96,12 +91,19 @@ export function createWorldMapLinks(container, chaosLevel, { width = 960, height
     ]
   };
 
+
+import * as Plot from "@observablehq/plot";
+import * as topojson from "topojson-client";
+
+export function createWorldMapLinks(container, chaosLevel=1, { width = 960, height = 500 } = {}) {
+  const land = topojson.feature(world, world.objects.land);
+
   // Ensure chaos level is within valid range
   const validChaosLevel = Math.max(1, Math.min(6, Math.floor(chaosLevel)));
   const connections = datasets[validChaosLevel];
 
   const chart = Plot.plot({
-    title: `Global Call Transfers (Chaos Level: ${validChaosLevel})`,
+    title: `Global Call Transfers`,
     projection: "equal-earth",
     width,
     height,

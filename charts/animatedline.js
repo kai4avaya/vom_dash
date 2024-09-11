@@ -1,76 +1,11 @@
-// import * as Plot from "@observablehq/plot";
-
-// export function createAnimatedLineGraph(container,chaosLevel=1) {
-//   const numPoints = 10;
-//   let data = Array(numPoints).fill().map(() => 5 + Math.random());
-//   let time = 0;
-  
-//   function updateData() {
-//     time += 0.05;
-//     const newValue = 5 + 
-//                      (Math.sin(time) * 0.1 * chaosLevel) + 
-//                      (Math.sin(time * 0.5) * 0.05 * chaosLevel) +
-//                      (Math.random() - 0.5) * 0.1 * chaosLevel;
-//     data = [...data.slice(1), Math.max(1, Math.min(10, newValue))];
-//   }
-  
-//   function renderChart() {
-//     const chart = Plot.plot({
-//       title: "Wait-time per Engagement",
-//       width: container.clientWidth,
-//       height: 400,
-//       y: {
-//         domain: [1, 10],
-//         label: "Wait-time (minutes)",
-//         grid: true
-//       },
-//       x: {
-//         domain: [1, 10],
-//         label: "Number of Engagements",
-//         grid: true
-//       },
-//       marks: [
-//         Plot.lineY(data.map((y, i) => ({x: i + 1, y})), {
-//           x: "x",
-//           y: "y",
-//           curve: "natural",
-//           stroke: "black",
-//           strokeWidth: 2
-//         }),
-
-//       ]
-//     });
-    
-//     container.innerHTML = '';
-//     container.appendChild(chart);
-//   }
-  
-//   function animate() {
-//     updateData();
-//     renderChart();
-//     setTimeout(() => requestAnimationFrame(animate), 200); // Slowed down to ~5 fps
-//   }
-  
-//   // Initial render
-//   renderChart();
-  
-//   // Start animation
-//   animate();
-  
-//   // Function to update chaos level
-//   return function updateChaosLevel(newLevel) {
-//     chaosLevel = newLevel;
-//   };
-// }
-
 import * as Plot from "@observablehq/plot";
 
 export function createAnimatedLineGraph(container, chaosLevel = 1) {
-  const numPoints = 60; // Increased to match the example
+  const numPoints = 60;
   const now = new Date();
   let data = Array(numPoints).fill().map((_, i) => ({
     date: new Date(now.getTime() - (numPoints - 1 - i) * 1000),
-    value: 5 + Math.random()
+    value: 2 + Math.random() * 2 // Start with values between 2 and 4
   }));
 
   function formatTime(date) {
@@ -79,15 +14,18 @@ export function createAnimatedLineGraph(container, chaosLevel = 1) {
 
   function updateData() {
     const now = new Date();
-    const newValue = 5 +
-      (Math.sin(now.getTime() / 1000) * 0.1 * chaosLevel) +
-      (Math.sin(now.getTime() / 2000) * 0.05 * chaosLevel) +
-      (Math.random() - 0.5) * 0.1 * chaosLevel;
+    const baseValue = 2; // Minimum value
+    const maxAmplitude = 3; // Maximum amplitude for oscillations
+    const randomFactor = Math.random() * 2 - 1; // Random factor between -1 and 1
+    const newValue = baseValue +
+      (Math.sin(now.getTime() / 1500) * maxAmplitude * chaosLevel / 5) +
+      (Math.cos(now.getTime() / 3000) * maxAmplitude * chaosLevel / 10) +
+      (randomFactor * maxAmplitude * chaosLevel / 5);
     data = [
       ...data.slice(1),
       {
         date: now,
-        value: Math.max(1, Math.min(10, newValue))
+        value: Math.max(baseValue, Math.min(10, newValue)) // Ensure value is at least baseValue
       }
     ];
   }
@@ -98,7 +36,7 @@ export function createAnimatedLineGraph(container, chaosLevel = 1) {
       width: container.clientWidth,
       height: 400,
       y: {
-        domain: [1, 10],
+        domain: [0, 10], // Keep y-axis consistent for easy comparison
         label: "Wait-time (minutes)",
         grid: true
       },

@@ -34,7 +34,7 @@ function generateOutageData(chaosLevel) {
 }
 
 export function createHexabin(container, chaosLevel = 1) {
-    container.innerHtml = ''
+    container.innerHTML = ''
   // Generate data based on chaos level
   const { outages, goodStates } = generateOutageData(chaosLevel);
 

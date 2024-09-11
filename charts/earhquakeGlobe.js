@@ -353,37 +353,58 @@ export function createEarthquakeGlobe(container, isOffline=true) {
         title: "Global Disruptions",
         // Add legend
         color: {
-          legend: true,
           domain: ["Normal", "Anomaly"],
           range: ["green", "red"]
         }
       });
       
-      container.innerHTML = '';
-      container.appendChild(chart);
+   
+      // Create a wrapper div for the chart and legend
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.alignItems = 'center';
+      wrapper.style.justifyContent = 'center';
       
-    
-// Update the legend creation part
-const legend = document.createElement('div');
-legend.style.position = 'relative';
-legend.style.bottom = '20px';
-legend.style.right = '20px';
-legend.style.background = 'rgba(255, 255, 255, 0.8)';
-legend.style.padding = '10px';
-legend.style.borderRadius = '5px';
-legend.style.fontFamily = 'Arial, sans-serif';
-legend.innerHTML = `
-  <div style="display: flex; flex-direction: column; gap: 10px;">
-    <div style="display: flex; align-items: center;">
-      <span style="color: green; font-size: 20px; margin-right: 10px;">●</span>
-      <span>Normal</span>
-    </div>
-    <div style="display: flex; align-items: center;">
-      <span style="color: red; font-size: 20px; margin-right: 10px;">●</span>
-      <span>Anomaly</span>
-    </div>
-  </div>
-`;
+      // Append the chart to the wrapper
+      wrapper.appendChild(chart);
+      
+      // Create and append the legend
+      const legend = document.createElement('div');
+      legend.style.marginLeft = '20px';
+      legend.style.display = 'flex';
+      legend.style.flexDirection = 'column';
+      legend.style.gap = '10px';
+      legend.style.fontSize = '16px';
+      legend.style.fontWeight = 'bold';
+      
+      const statuses = ['Normal', 'Anomaly'];
+      const colors = ['green', 'red'];
+      
+      statuses.forEach((s, i) => {
+        const item = document.createElement('div');
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.gap = '10px';
+        
+        const dot = document.createElement('span');
+        dot.style.width = '12px';
+        dot.style.height = '12px';
+        dot.style.borderRadius = '50%';
+        dot.style.backgroundColor = colors[i];
+        dot.style.display = 'inline-block';
+        
+        const text = document.createTextNode(s);
+        
+        item.appendChild(dot);
+        item.appendChild(text);
+        legend.appendChild(item);
+      });
+      
+      wrapper.appendChild(legend);
+      
+      // Clear the container and append the wrapper
+      container.innerHTML = '';
+      container.appendChild(wrapper);
       
       longitude += 1;
       if (longitude > 360) longitude = 0;

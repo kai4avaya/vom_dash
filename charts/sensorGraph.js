@@ -1,6 +1,7 @@
 import * as Plot from "@observablehq/plot";
 
 const chaosLevel = 1;  // You can change this value to increase/decrease fluctuation
+const colorScheme = ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949"];
 
 // Generate synthetic data for multiple sensors
 export function generateSensorData(numSensors = 3, hours = 50) {
@@ -29,25 +30,77 @@ function fluctuateData(data, chaos) {
 export function createSensorLineGraph(container, initialData = null, chaos = chaosLevel, { width = 700, height = 300 } = {}) {
   let data = initialData && Array.isArray(initialData) ? [...initialData] : generateSensorData();
 
+  // function updateChart() {
+  //   const chart = Plot.plot({
+  //     width,
+  //     height,
+  //     marginLeft: 60,
+  //     marginBottom: 30,
+  //     grid: true,
+  //     x: { label: "Hour" },
+  //     y: { label: "Sensor Value", domain: [0, 20] },
+  //     color: { legend: true },
+  //     marks: [
+  //       Plot.lineY(data, { x: "hour", y: "value", stroke: "sensor", strokeWidth: 2 }),
+  //       Plot.ruleY([0])  // Baseline
+  //     ]
+  //   });
+
+  
   function updateChart() {
     const chart = Plot.plot({
       width,
       height,
       marginLeft: 60,
-      marginBottom: 30,
-      grid: true,
-      x: { label: "Hour" },
-      y: { label: "Sensor Value", domain: [0, 20] },
-      color: { legend: true },
+      marginRight: 120,
+      marginBottom: 50,
+      marginTop: 40,
+      style: {
+        fontFamily: "Arial, sans-serif",
+        fontSize: 12,
+        background: "#f7f7f7"
+      },
+      x: {
+        label: "Hour →",
+        tickFormat: d => d.toString().padStart(4, '0'),
+        labelOffset: 30
+      },
+      y: {
+        label: "↑ Sensor Value",
+        domain: [0, 20],
+        grid: true,
+        ticks: 5
+      },
+      color: {
+        scheme: "category10",
+      },
       marks: [
-        Plot.lineY(data, { x: "hour", y: "value", stroke: "sensor", strokeWidth: 2 }),
-        Plot.ruleY([0])  // Baseline
-      ]
+        Plot.ruleY([0]),
+        Plot.lineY(data, {
+          x: "hour",
+          y: "value",
+          stroke: "sensor",
+          strokeWidth: 2,
+          opacity: 0.8,
+          curve: "basis"
+        }),
+        Plot.text(data, Plot.selectLast({
+          x: "hour",
+          y: "value",
+          z: "sensor",
+          text: "sensor",
+          dx: 5,
+          dy: -5,
+          fill: "sensor"
+        }))
+      ],
+      title: "Real-time Call Center Sensor Data"
     });
 
     container.innerHTML = '';
     container.appendChild(chart);
   }
+
 
   function animate() {
     data = fluctuateData(data, chaos);
