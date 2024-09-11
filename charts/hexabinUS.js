@@ -34,7 +34,7 @@ function generateOutageData(chaosLevel) {
 }
 
 export function createHexabin(container, chaosLevel = 1) {
-    container.innerHTML = ''
+  container.innerHTML = '';
   // Generate data based on chaos level
   const { outages, goodStates } = generateOutageData(chaosLevel);
 
@@ -136,7 +136,7 @@ export function createHexabin(container, chaosLevel = 1) {
 }
 
 // Function to update the map with a new chaos level
-export function updateChaosLevel(container, newChaosLevel) {
-  d3.select(container).selectAll("*").remove(); // Clear the container
-  createHexabin(container, newChaosLevel); // Recreate the map with the new chaos level
-}
+// export function updateChaosLevel(container, newChaosLevel) {
+//   d3.select(container).selectAll("*").remove(); // Clear the container
+//   createHexabin(container, newChaosLevel); // Recreate the map with the new chaos level
+// }
